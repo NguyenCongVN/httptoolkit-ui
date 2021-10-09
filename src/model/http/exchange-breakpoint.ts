@@ -177,14 +177,14 @@ export abstract class Breakpoint<T extends BreakpointInProgress> {
     }
 
     readonly resume = async () => {
-        this.deferred.resolve({
+        return {
             ...this.resultMetadata,
             // Build the full encoded body before sending
             body: await this.editableBody.encoded,
             // Psuedo-headers those will be generated automatically from the other,
             // fields, as part of the rest of the request process.
             headers: omitPsuedoHeaders(this.resultMetadata.headers)
-        } as unknown as BreakpointResumeType<T>);
+        } as unknown as BreakpointResumeType<T>
     }
 
     abstract close(): void;
@@ -199,8 +199,14 @@ class RequestBreakpoint extends Breakpoint<BreakpointRequestResult> {
         this.deferred.resolve({ response: result });
     }
 
+    // close = () => {
+    //     this.deferred.resolve({ response: 'close' });
+    // }
+
     close = () => {
-        this.deferred.resolve({ response: 'close' });
+        return {
+            response: 'close' 
+        }
     }
 }
 

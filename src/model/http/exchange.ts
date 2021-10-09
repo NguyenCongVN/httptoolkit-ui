@@ -385,9 +385,23 @@ export class HttpExchange {
 
     async triggerRequestBreakpoint(request: MockttpBreakpointedRequest) {
         const breakpoint = await getRequestBreakpoint(request);
+        console.log('breakpoint:' , breakpoint , ' and request correspond ', request)
+        
         runInAction(() => { this._requestBreakpoint = breakpoint; });
 
-        const result = await breakpoint.waitForCompletedResult();
+        // const result = await breakpoint.waitForCompletedResult();
+        let result
+
+        if(request.url.indexOf('google.com') > 0)
+        {
+            result = await breakpoint.resume()
+        }
+        else
+        {
+            result = await breakpoint.close()
+        }
+
+        console.log('result breakpoint' , result)
 
         if (this._requestBreakpoint === breakpoint) {
             runInAction(() => { this._requestBreakpoint = undefined; });
