@@ -431,7 +431,8 @@ export const buildDefaultRules = (rulesStore: RulesStore, proxyStore: ProxyStore
                 activated: true,
                 matchers: [new DefaultWildcardMatcher()],
                 completionChecker: new completionCheckers.Always(),
-                handler: new PassThroughHandler(rulesStore)
+                // Thử đổi thành RequestBreakpointHandler
+                handler: new RequestBreakpointHandler(rulesStore)
             }
         ])
     ]

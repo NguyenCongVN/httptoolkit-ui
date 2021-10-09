@@ -155,9 +155,11 @@ async function buildApi(request: BuildApiRequest): Promise<BuildApiResponse> {
 
 ctx.addEventListener('message', async (event: { data: BackgroundRequest }) => {
     try {
+        console.log('event ' , event)
         switch (event.data.type) {
             case 'decode':
                 const decodeResult = await decodeRequest(event.data);
+                console.log('result' , decodeResult)
                 ctx.postMessage(decodeResult, [
                     decodeResult.inputBuffer,
                     decodeResult.decodedBuffer

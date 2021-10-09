@@ -184,7 +184,7 @@ export class RulesStore {
                     this.clientCertificateHostMap = rawStoreData.draftClientCertificateHostMap;
                 }
             });
-        } catch (e) {
+        } catch (e : any) {
             reportError(e);
         }
 
@@ -268,7 +268,7 @@ export class RulesStore {
             } else {
                 return systemProxyConfig;
             }
-        } catch (e) {
+        } catch (e : any) {
             console.log("Could not parse proxy", proxyUrl);
             reportError(e);
             return 'unparseable';

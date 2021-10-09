@@ -173,7 +173,7 @@ export class EventsStore {
                 const exchange = new HttpExchange(this.apiStore, request);
                 this.events.push(exchange);
             }
-        } catch (e) {
+        } catch (e : any) {
             reportError(e);
         }
     }
@@ -186,12 +186,20 @@ export class EventsStore {
             // We add the request from scratch if it's somehow missing, which can happen given
             // races or if the server doesn't support request-initiated events.
             const existingEventIndex = _.findIndex(this.events, { id: request.id });
+
+
+            console.log(this.events)
+
+
             if (existingEventIndex >= 0) {
                 (this.events[existingEventIndex] as HttpExchange).updateFromCompletedRequest(request);
             } else {
                 this.events.push(new HttpExchange(this.apiStore, request));
             }
-        } catch (e) {
+
+            console.log(this.events)
+            
+        } catch (e : any) {
             reportError(e);
         }
     }
@@ -208,7 +216,7 @@ export class EventsStore {
             };
 
             exchange.markAborted(request);
-        } catch (e) {
+        } catch (e : any) {
             reportError(e);
         }
     }
@@ -225,7 +233,7 @@ export class EventsStore {
             }
 
             exchange.setResponse(response);
-        } catch (e) {
+        } catch (e : any) {
             reportError(e);
         }
     }
@@ -246,7 +254,7 @@ export class EventsStore {
                     .filter((x): x is string => !!x)
                     .join('\n')
             }));
-        } catch (e) {
+        } catch (e : any) {
             reportError(e);
         }
     }
@@ -282,7 +290,7 @@ export class EventsStore {
             }
 
             this.events.push(exchange);
-        } catch (e) {
+        } catch (e : any) {
             reportError(e);
         }
     }

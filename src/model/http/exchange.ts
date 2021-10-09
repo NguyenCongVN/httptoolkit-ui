@@ -52,7 +52,7 @@ function tryParseUrl(request: InputRequest): (URL & { parseable: true }) | undef
             new URL(request.url, `${request.protocol}://${request.hostname || 'unknown.invalid'}`),
             { parseable: true } as const
         );
-    } catch (e) {
+    } catch (e : any) {
         console.log('Unparseable URL:', request.url);
 
         // Don't bother reporting empty URLs - we use these as placeholders for some bad requests
@@ -118,6 +118,7 @@ export class ExchangeBody implements MessageBody {
         }
 
         this._contentEncoding = asHeaderArray(headers['content-encoding']);
+        console.log(this)
     }
 
     private _contentEncoding: string[];
@@ -141,7 +142,7 @@ export class ExchangeBody implements MessageBody {
             const { decoded, encoded } = await decodeBody(encodedBuffer, this._contentEncoding);
             this._encoded = encoded;
             return decoded;
-        } catch (e) {
+        } catch (e : any) {
             reportError(e);
             return undefined;
         }
@@ -178,6 +179,7 @@ export type SuccessfulExchange = Omit<HttpExchange, 'response'> & {
 export class HttpExchange {
 
     constructor(apiStore: ApiStore, request: InputRequest) {
+        console.log('plain req' , request)
         this.request = addRequestMetadata(request);
 
         this.timingEvents = request.timingEvents;
@@ -201,6 +203,8 @@ export class HttpExchange {
 
         // Start loading the relevant Open API specs for this request, if any.
         this._apiMetadataPromise = apiStore.getApi(this.request);
+
+        console.log('exchange ,' ,this)
     }
 
     // Logic elsewhere can put values into these caches to cache calculations
@@ -339,8 +343,10 @@ export class HttpExchange {
 
         if (apiMetadata) {
             try {
-                return new ApiExchange(apiMetadata, this);
-            } catch (e) {
+                let newApi = new ApiExchange(apiMetadata, this);
+                console.log(newApi)
+                return newApi
+            } catch (e : any) {
                 reportError(e);
                 throw e;
             }

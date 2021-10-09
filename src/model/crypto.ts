@@ -14,7 +14,7 @@ export function validatePKCS12(
     let asn1Data: forge.asn1.Asn1;
     try {
         asn1Data = forge.asn1.fromDer(forge.util.createBuffer(data));
-    } catch (e) {
+    } catch (e : any) {
         console.log(e.message);
         return 'invalid-format';
     }
@@ -24,7 +24,7 @@ export function validatePKCS12(
         // Could be false (different key on cert within, who knows what else), but typically not.
         forge.pkcs12.pkcs12FromAsn1(asn1Data, passphrase);
         return 'valid';
-    } catch (e) {
+    } catch (e : any) {
         console.log(e.message);
         return 'invalid-passphrase';
     }

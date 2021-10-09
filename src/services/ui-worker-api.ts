@@ -42,6 +42,7 @@ function callApi<
     T extends BackgroundRequest,
     R extends BackgroundResponse
 >(request: Omit<T, 'id'>, transfer: any[] = []): Promise<R> {
+    console.log('calling api')
     const id = getId();
 
     return new Promise<R>((resolve, reject) => {

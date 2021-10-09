@@ -156,7 +156,11 @@ export class ApiStore {
         // If not, is this a known public API? (note that private always has precedence)
         const requestUrl = `${parsedUrl.hostname}${parsedUrl.pathname}`;
 
+        console.log(requestUrl)
+
         let publicSpecId = findPublicOpenApi(requestUrl);
+
+        console.log(publicSpecId , 'public Spec')
 
         if (!publicSpecId) return;
         if (!Array.isArray(publicSpecId)) publicSpecId = [publicSpecId];

@@ -38,6 +38,8 @@ const paramValidator = new Ajv({
 export function findBestMatchingApi(apis: ApiMetadata[], request: HtkRequest): ApiMetadata | undefined {
     const matchingApis = apis.filter((api) => matchOperation(api, request).matched);
 
+    console.log('matching Apis' , matchingApis)
+
     // If we've successfully found one matching API, return it
     if (matchingApis.length === 1) return matchingApis[0];
 

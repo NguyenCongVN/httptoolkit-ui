@@ -199,16 +199,19 @@ export class ProxyStore {
 
     // Proxy request rules config through to the server instance:
     @computed get setRequestRules() {
+        console.log('setRequestRules')
         return this.server.setRequestRules.bind(this.server);
     }
 
     // Proxy websocket rules config through to the server instance:
     @computed get setWebSocketRules() {
+        console.log('setWebSocketRules')
         return this.server.setWebSocketRules.bind(this.server);
     }
 
     // Proxy event subscriptions through to the server instance:
     @computed get onServerEvent() {
+        console.log('onServerEvent')
         return this.server.on.bind(this.server);
     }
 

@@ -211,6 +211,9 @@ export class ExchangeDetailsPane extends React.Component<{
         } = exchange;
 
         if (requestBreakpoint) {
+
+            // Có thể dừng lại tại đây
+            console.log('breakpoint', exchange)
             return <ExchangeRequestBreakpointHeader
                 key='breakpoint-header'
                 onCreateResponse={respondToBreakpointedRequest}
